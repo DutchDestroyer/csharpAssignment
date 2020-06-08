@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Zivver.Candidate.Assignment.Models
 {
@@ -258,5 +259,11 @@ namespace Zivver.Candidate.Assignment.Models
             RecipientNames = recipientNames;
             SenderName = senderName;
         }
+    }
+
+    public interface IZivverMessageService
+    {
+        IEnumerable<Message> Get();
+        Task<IEnumerable<Message>> GetAsync();
     }
 }

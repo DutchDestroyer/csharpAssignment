@@ -31,7 +31,7 @@ namespace Zivver.Candidate.Assignment
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1(nameOfParticipant, new List<Models.Message>()));
+            Application.Run(new Form1(nameOfParticipant));
         }
     }
 }

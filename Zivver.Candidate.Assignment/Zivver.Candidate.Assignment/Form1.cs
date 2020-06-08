@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using Zivver.Candidate.Assignment.Models;
 using Message = Zivver.Candidate.Assignment.Models.Message;
@@ -11,12 +12,10 @@ namespace Zivver.Candidate.Assignment
     {
         private List<DataToFilter> _filterProperties;
         private List<DataToReturn> _returnProperties;
+        private IZivverMessageService _zivverMessageService;
 
-        private readonly List<Message> _messages;
-
-        public Form1(string nameOfParticipant, List<Message> messages)
+        public Form1(string nameOfParticipant)
         {
-            _messages = messages;
             _filterProperties = new List<DataToFilter>();
             InitializeComponent();
             label2.Text += string.Concat(string.IsNullOrWhiteSpace(nameOfParticipant) ? "<insert name>" : nameOfParticipant, ",");
@@ -100,8 +99,13 @@ namespace Zivver.Candidate.Assignment
 
         private void button1_Click(object sender, EventArgs e)
         {
+            var messages = GetMessagesFromServer();
+            new ZIVVER(messages).GetCorrectDataFromMessage(_returnProperties, _filterProperties);
+        }
 
-            new ZIVVER(_messages).GetCorrectDataFromMessage(_returnProperties, _filterProperties);
+        private List<Message> GetMessagesFromServer()
+        {
+            return _zivverMessageService.Get().ToList();
         }
 
         private void UpdateFilterProperties(CheckBox checkBox, DataToFilter filterProperty)
